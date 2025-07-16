@@ -61,50 +61,6 @@ export class TaskModel implements TaskData {
   }
 
   /**
-   * 从JSON数据重建任务对象
-   * @param data 符合TaskData结构的对象
-   * @returns 重构的任务实例
-   * @用途 用于反序列化存储数据[5](@ref)
-   */
-  static fromJSON(data: TaskData): TaskModel {
-    return new TaskModel(
-      data.id,
-      data.title,
-      data.remainingTime,
-      data.completed,
-      data.completedTime
-    );
-  }
-
-  /**
-   * 将任务列表序列化为JSON字符串
-   * @param tasks 任务实例数组
-   * @returns JSON格式字符串
-   * @用途 本地存储数据持久化[3](@ref)
-   */
-  static toJSONString(tasks: TaskModel[]): string {
-    return JSON.stringify(tasks);
-  }
-
-  /**
-   * 从JSON字符串解析任务列表
-   * @param jsonString JSON格式的字符串
-   * @returns 任务实例数组
-   * @安全机制 错误时返回空数组避免崩溃[6](@ref)
-   */
-  static fromJSONString(jsonString: string): TaskModel[] {
-    try {
-      const data: TaskData[] = JSON.parse(jsonString);
-      // 校验并转换数组元素
-      return Array.isArray(data) ?
-      data.map(item => TaskModel.fromJSON(item)) : [];
-    } catch (error) {
-      console.error('JSON解析失败:', error);
-      return [];  // 故障安全设计：返回空数组
-    }
-  }
-
-  /**
    * 更新剩余时间（安全方法）
    */
   updateRemainingTime(seconds: number): void {
@@ -124,21 +80,6 @@ export class TaskModel implements TaskData {
    * @param newTask 要添加的新任务
    * @returns 更新后的任务映射对象
    */
-  // static addTaskForDate(
-  //   taskMap: TaskListMap,
-  //   dateKey: string,
-  //   newTask: TaskModel
-  // ): TaskListMap {
-  //   // 创建当前日期的任务数组副本（避免直接修改原数组）
-  //   const currentTasks = [...(taskMap[dateKey] || [])];
-  //
-  //   // 检查任务是否已存在（防止重复添加）
-  //   if (!currentTasks.some(task => task.id === newTask.id)) {
-  //     currentTasks.push(newTask);
-  //     return { ...taskMap, [dateKey]: currentTasks };
-  //   }
-  //   return taskMap; // 如果已存在则返回原对象
-  // }
   static addTaskForDate(
     taskMap: TaskListMap,
     dateKey: string,
