@@ -1,99 +1,94 @@
-@Preview
+
+@CustomDialog
 @Component
 export struct AddTaskView {
+  controller:CustomDialogController
+  onCancel: () => void = ()=>{};
+  onConfirm: (title: string, minutes: number) => void = ()=>{};
+
   @State title: string = '';
-  @State remainingTime: string = '';
-
-  // 确认添加任务
-  private handleConfirm() {
-    if (!this.title.trim()) return;
-
-    const minutes = parseInt(this.remainingTime) || 25;
-    // 实际添加到任务列表的逻辑
-    console.log(`添加任务: ${this.title}, ${minutes}分钟`);
-  }
-
-  // 取消添加
-  private handleCancel() {
-    // 返回任务列表视图
-    console.log('取消添加任务');
-  }
+  @State minutes: string = '25'; // 默认番茄钟时长
 
   build() {
     Column() {
-      // 任务名称输入
-      Column() {
-        Text('待办事项')
-          .fontSize(16)
-          .fontColor('#666666')
-          .margin({ bottom: 8 })
+      Text('添加新任务')
+        .fontSize(24)
+        .fontWeight(FontWeight.Bold)
+        .fontColor('#FF6B6B')
+        .margin({ bottom: 30 })
 
-        TextInput({ text: this.title, placeholder: '输入任务名称' })
-          .placeholderColor('#BBBBBB')
-          .caretColor('#FF6B6B')
+      // 输入区域
+      Column() {
+        Text('任务名称')
+          .fontSize(18)
+          .fontColor('#666666')
+          .margin({ bottom: 8, left: 8 })
+
+        TextInput({ placeholder: '输入任务内容' })
           .width('100%')
           .height(56)
           .padding(12)
           .fontSize(18)
-          .border({ width: 1, color: '#EEEEEE', radius: 12 })
-          .onChange((value) => this.title = value)
+          .backgroundColor('#FFF8F8')
+          .borderRadius(12)
+          .onChange(value => this.title = value)
       }
       .margin({ bottom: 24 })
 
-      // 预计时间输入
       Column() {
-        Text('预计时间（分钟）')
-          .fontSize(16)
+        Text('预计时长（分钟）')
+          .fontSize(18)
           .fontColor('#666666')
-          .margin({ bottom: 8 })
+          .margin({ bottom: 8, left: 8 })
 
-        TextInput({
-          text: this.remainingTime,
-          placeholder: '输入分钟数'
-        })
+        TextInput({ text: this.minutes })
           .type(InputType.Number)
-          .placeholderColor('#BBBBBB')
-          .caretColor('#FF6B6B')
           .width('100%')
           .height(56)
           .padding(12)
           .fontSize(18)
-          .border({ width: 1, color: '#EEEEEE', radius: 12 })
-          .onChange((value) => {
-            if (/^\d*$/.test(value)) this.remainingTime = value;
-          })
+          .backgroundColor('#FFF8F8')
+          .borderRadius(12)
+          .onChange(value => this.minutes = value)
       }
-      .margin({ bottom: 36 })
+      .margin({ bottom: 40 })
 
-      // 操作按钮
+      // 按钮组
       Row() {
-        // 取消按钮
         Button('取消', { type: ButtonType.Normal })
-          .backgroundColor('#F0F0F0')
-          .fontColor('#666666')
+          .layoutWeight(1) // 等分空间
+          .height(45)
           .fontSize(16)
-          .height(50)
-          .layoutWeight(1)
-          .onClick(() => this.handleCancel())
+          .fontColor('#606266')
+          .backgroundColor('#f0f0f0')
+          .borderRadius(8)
+          .onClick(() => this.onCancel?.())
 
-        Blank().width(20)
+        // 按钮间距
+        Blank()
+          .width(16)
 
         // 确认按钮
         Button('确认', { type: ButtonType.Capsule })
-          .backgroundColor('#FF6B6B')
-          .fontColor(Color.White)
+          .layoutWeight(1) // 等分空间
+          .height(45)
           .fontSize(16)
-          .height(50)
-          .layoutWeight(2)
-          .opacity(this.title.trim() ? 1 : 0.6)
-          .enabled(!!this.title.trim())
-          .onClick(() => this.handleConfirm())
+          .fontColor(Color.White)
+          .backgroundColor('#00ffcc')
+          .opacity(this.title.trim() ? 1 : 0.6) // 无内容时降低不透明度
+          .enabled(!!this.title.trim()) // 无内容时禁用
+          .onClick(() => {
+            const minutesValue = parseInt(this.minutes) || 25;
+            this.onConfirm?.(this.title, minutesValue);
+          })
       }
+      .width('100%')
+      .justifyContent(FlexAlign.SpaceBetween)
     }
-    .padding(32)
+    .width('80%')
+    .padding(30)
     .backgroundColor(Color.White)
-    .borderRadius(20)
-    .width('90%')
-    .shadow({ radius: 16, color: '#00000020', offsetX: 0, offsetY: 4 })
+    .borderRadius(24)
+    .shadow({ radius: 24, color: '#00000030' })
   }
 }
