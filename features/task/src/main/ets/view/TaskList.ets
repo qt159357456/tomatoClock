@@ -116,7 +116,7 @@ export struct TaskList {
                 .onActionEnd(() => {
                   if (this.count > 1) {
                     this.deleteID = task.id;
-                    this.deleteDateKey = task.dateKey;
+                    this.deleteDateKey = task.dateKey||'';
                     this.deleteDailogController.open()
                   }
                   // 重置 count
