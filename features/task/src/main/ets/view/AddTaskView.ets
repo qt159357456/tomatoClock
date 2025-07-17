@@ -1,4 +1,5 @@
 
+@Preview
 @CustomDialog
 @Component
 export struct AddTaskView {
