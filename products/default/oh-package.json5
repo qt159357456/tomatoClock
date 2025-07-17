@@ -9,6 +9,7 @@
     "learning": "file:../../features/learning",
     "map": "file:../../features/map",
     "quickstart": "file:../../features/quickstart",
-    "task": "file:../../features/task"
+    "task": "file:../../features/task",
+    "timer": "file:../../features/timer"
   }
 }

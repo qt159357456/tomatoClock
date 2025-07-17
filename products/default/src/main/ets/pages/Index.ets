@@ -2,6 +2,7 @@ import { QuickStartPage } from 'quickstart';
 import { CourseLearning } from 'learning';
 import { KnowledgeMap } from 'map';
 import {TaskListView} from 'task'
+import {TimerView} from 'timer'
 @Entry
 @Component
 struct Index {
@@ -31,33 +32,34 @@ struct Index {
     })
   }
   build() {
-    // Tabs({ barPosition: BarPosition.End,controller: this.tabsController }){
-    //   TabContent() {
-    //     QuickStartPage()
-    //   }
-    //   .tabBar(this.tabBarBuilder('快速入门', 0, $r('app.media.ic_01_on'), $r('app.media.ic_01_off')))
-    //
-    //   TabContent() {
-    //     CourseLearning()
-    //   }
-    //   .tabBar(this.tabBarBuilder('课程学习', 1, $r('app.media.ic_01_on'), $r('app.media.ic_01_off')))
-    //
-    //   TabContent() {
-    //     KnowledgeMap()
-    //   }
-    //   .tabBar(this.tabBarBuilder('知识地图', 2, $r('app.media.ic_01_on'), $r('app.media.ic_01_off')))
-    //
-    // }
-    // .scrollable(false)
-    // .vertical(false)
-    // .divider({
-    //   strokeWidth: 0.5,
-    //   color: '#0D182431'
-    // })
-    // .backgroundColor('#F1F3F5')
-    // .padding({ top: 36, bottom: 28 })
-    Column() {
-      TaskListView()
+    Tabs({ barPosition: BarPosition.End,controller: this.tabsController }){
+      TabContent() {
+        TimerView()
+      }
+      .tabBar(this.tabBarBuilder('倒计时', 0, $r('app.media.ic_01_on'), $r('app.media.ic_01_off')))
+
+      TabContent() {
+        TaskListView()
+      }
+      .tabBar(this.tabBarBuilder('任务管理', 1, $r('app.media.ic_01_on'), $r('app.media.ic_01_off')))
+
+      TabContent() {
+
+      }
+      .tabBar(this.tabBarBuilder('成就', 2, $r('app.media.ic_01_on'), $r('app.media.ic_01_off')))
+      TabContent() {
+
+      }
+      .tabBar(this.tabBarBuilder('我的', 3, $r('app.media.ic_01_on'), $r('app.media.ic_01_off')))
+
     }
+    .scrollable(false)
+    .vertical(false)
+    .divider({
+      strokeWidth: 0.5,
+      color: '#0D182431'
+    })
+    .backgroundColor('#F1F3F5')
+    .padding({ top: 36, bottom: 28 })
   }
 }
