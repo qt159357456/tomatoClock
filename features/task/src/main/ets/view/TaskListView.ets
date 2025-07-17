@@ -7,21 +7,14 @@ import { AddTaskView } from './AddTaskView';
 @Preview
 @Component
 export struct TaskListView {
-  @Prop taskListMap: TaskListMap = {
-    // '2025-07-17': [
-    //   new TaskModel('task1', '写一篇发言稿', 90),
-    //   new TaskModel('task2', '项目会议准备', 45)
-    // ],
-    '2024-06-23': [
-      new TaskModel('task3', '设计提案文档', 120)
-    ]
-  };
+  @Link taskListMap: TaskListMap;
+  onSwitchToTimer?: (task: TaskModel) => void;
   dialogController: CustomDialogController = new CustomDialogController({
     builder: AddTaskView({
       onCancel: () => {this.dialogController.close()},
-      onConfirm: (title, minutes) => {
+      onConfirm: async (title, minutes) => {
         const seconds = minutes ; // 将分钟转换为秒
-        const result = TaskModel.createDailyTask(this.taskListMap, title, seconds);
+        const result = await TaskModel.createDailyTask(this.taskListMap, title, seconds);
         this.taskListMap = result[0];
         this.dialogController.close();
       }
@@ -54,7 +47,8 @@ export struct TaskListView {
               TaskList({
                 taskListMap:this.taskListMap,
                 taskList: this.taskListMap[dateKey],
-                targetDate: dateKey
+                targetDate: dateKey,
+                onSwitchToTimer: this.onSwitchToTimer
               })
 
             })

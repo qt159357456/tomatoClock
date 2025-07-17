@@ -1,15 +1,35 @@
 import { QuickStartPage } from 'quickstart';
 import { CourseLearning } from 'learning';
 import { KnowledgeMap } from 'map';
-import {TaskListView} from 'task'
+import {TaskListView,TaskListMap,TaskModel} from 'task'
 import {TimerView} from 'timer'
 import { DataCollection } from 'statistics';
 
 @Entry
 @Component
 struct Index {
+  @State taskListMap: TaskListMap = {};
   @State currentIndex: number = 0;
+  @State selectedTask: TaskModel | null = null;
   private tabsController : TabsController = new TabsController();
+
+  aboutToAppear(): void {
+    this.loadTaskData()
+  }
+  async loadTaskData() {
+    try {
+      const data = await TaskModel.getTaskListMap();
+      this.taskListMap = data;
+      console.info('任务数据加载成功');
+    } catch (error) {
+      console.error('数据加载失败:', error);
+    }
+  }
+  switchToTimer(task: TaskModel) {
+    this.selectedTask = task; // 存储要传递的任务
+    this.currentIndex = 0; // 切换到倒计时页
+    this.tabsController.changeIndex(0); // 更新 Tab 控制器
+  }
   @Builder
   tabBarBuilder(title: string, targetIndex: number, selectedIcon: Resource, unselectIcon: Resource) {
     Column() {
@@ -36,12 +56,18 @@ struct Index {
   build() {
     Tabs({ barPosition: BarPosition.End,controller: this.tabsController }){
       TabContent() {
-        TimerView()
+        TimerView({
+          taskListMap: this.taskListMap,
+          selectedTask: this.selectedTask
+        })
       }
       .tabBar(this.tabBarBuilder('倒计时', 0, $r('app.media.ic_01_on'), $r('app.media.ic_01_off')))
 
       TabContent() {
-        TaskListView()
+        TaskListView({
+          taskListMap: this.taskListMap,
+          onSwitchToTimer: this.switchToTimer.bind(this) // 传递切换方法
+        })
       }
       .tabBar(this.tabBarBuilder('任务管理', 1, $r('app.media.ic_01_on'), $r('app.media.ic_01_off')))
 
