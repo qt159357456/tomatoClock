@@ -2,16 +2,27 @@
 @Component
 export struct TimerView {
   @State taskName: string = "我是任务";
-  @State inTime: number = 1 * 60;
-  @State currentTime: number = this.inTime;  // 默认25分钟
+  @State inTime: number = 0.5;
+  @State @Watch('updateProgress') currentTime: number = this.inTime * 60;  // 默认25分钟
   @State isRunning: boolean = false;
   @State beInterrupted: boolean = false;
+  @State set:number = 0;
   //@State sliderValue: number = 25;  // 滑杆默认值（分钟）
   //@State showCustomTime: boolean = false;  // 控制自定义时间设置的显示
   private timerId: number = -1;
-  private defaultTime: number = this.inTime;  // 保存默认时间，用于重置
-  //private minTime: number = 1;  // 最小时间1分钟
-  //private maxTime: number = 120;  // 最大时间120分钟
+  private defaultTime: number = this.inTime * 60;  // 保存默认时间，用于重置
+  @State progress: number = 0;
+
+  updateset() {
+    if(this.set < 1)
+      this.set = 1 + this.set;
+    else
+      this.set = 0;
+  }
+
+  updateProgress() {
+    this.progress = 1 - this.currentTime / this.defaultTime
+  }
 
   aboutToDisappear() {
     if (this.timerId !== -1) {
@@ -55,8 +66,24 @@ export struct TimerView {
       this.currentTime = this.defaultTime;
     }
   }
+
   build() {
     Column() {
+      Row() {
+        Button(){
+          Image($r('app.media.setting')) // 使用资源图片
+            .width(24)
+            .height(24)
+        }
+        .backgroundColor(Color.Transparent)
+          .width(30)
+          .height(30)
+          .onClick(() => this.updateset())
+      }
+      .margin({ top: 0 })
+      .width('100%')
+      .justifyContent(FlexAlign.End)
+
       Text("目标任务")
         .fontSize(24)
         .fontWeight(FontWeight.Bold)
@@ -72,32 +99,40 @@ export struct TimerView {
       // 番茄钟卡片
       Stack() {
         // 卡片背景
+        Image($r(`app.media.f${this.set}${Math.floor(this.progress*3)}`)) // 使用资源图片
+          .width(`${60+Math.floor(this.progress*3)*2}%`)
+          .height(`${60+Math.floor(this.progress*3)*2}%`)
+          .objectFit(ImageFit.Cover)
 
         Column() {
           // 留空给进度条
         }
         .width('100%')
         .height('100%')
-        .backgroundColor('#FFFFFF')
         .borderRadius(20)
         .padding(20)
         .shadow({ radius: 10, color: Color.Gray, offsetX: 0, offsetY: 5 })
 
         // 进度条
         Progress({
-          value: 100*(1 - this.currentTime/this.inTime),
+          value: 100*this.progress,
           style: ProgressStyle.Ring
         })
           .width(200)
           .height(200)
-          .color(`rgb(${Math.floor((1 - this.currentTime/this.inTime)*255)},${Math.floor((this.currentTime/this.inTime)*255)},0)`)
+          .color(`rgb(${Math.floor(this.progress*255)},${Math.floor((1 - this.progress)*255)},0)`)
 
         // 倒计时显示
         Text(`${Math.floor(this.currentTime / 60)}:${(this.currentTime % 60).toString().padStart(2, '0')}`)
           .fontSize(36)
           .fontWeight(FontWeight.Bold)
-          .fontColor("black")
+          .fontColor("white")
           .margin({ top: 20 })
+          .textShadow({
+            radius: 5,     // 模糊半径
+            color: "black",       // 阴影颜色
+          })
+
       }
       .width('80%')
       .height(300)
