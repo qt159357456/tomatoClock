@@ -3,6 +3,8 @@ import { CourseLearning } from 'learning';
 import { KnowledgeMap } from 'map';
 import {TaskListView} from 'task'
 import {TimerView} from 'timer'
+import { DataCollection } from 'statistics';
+
 @Entry
 @Component
 struct Index {
@@ -44,7 +46,7 @@ struct Index {
       .tabBar(this.tabBarBuilder('任务管理', 1, $r('app.media.ic_01_on'), $r('app.media.ic_01_off')))
 
       TabContent() {
-
+        DataCollection()
       }
       .tabBar(this.tabBarBuilder('成就', 2, $r('app.media.ic_01_on'), $r('app.media.ic_01_off')))
       TabContent() {

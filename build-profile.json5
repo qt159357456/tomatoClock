@@ -65,6 +65,10 @@
     {
       "name": "timer",
       "srcPath": "./features/timer",
+    },
+    {
+      "name": "statistics",
+      "srcPath": "./features/statistics",
     }
   ]
 }

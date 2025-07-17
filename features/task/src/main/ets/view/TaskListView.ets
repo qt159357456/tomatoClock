@@ -3,14 +3,15 @@ import { TaskList } from './TaskList';
 import { AddTaskView } from './AddTaskView';
 
 
+
 @Preview
 @Component
 export struct TaskListView {
-  @State taskListMap: TaskListMap = {
-    '2024-06-25': [
-      new TaskModel('task1', '写一篇发言稿', 90),
-      new TaskModel('task2', '项目会议准备', 45)
-    ],
+  @Prop taskListMap: TaskListMap = {
+    // '2025-07-17': [
+    //   new TaskModel('task1', '写一篇发言稿', 90),
+    //   new TaskModel('task2', '项目会议准备', 45)
+    // ],
     '2024-06-23': [
       new TaskModel('task3', '设计提案文档', 120)
     ]
@@ -39,38 +40,23 @@ export struct TaskListView {
   build() {
     Stack() {
       Column() {
-        // 顶部应用标题+加号按钮区域
         Row() {
           Image($r('app.media.tomato_icon'))
             .width('100%')
-            .height(100)
-            .margin({ left: 12 })
-          // 标题组
-          Row() {
-            Text('番茄专注')
-              .fontSize(24)
-              .fontWeight(FontWeight.Bold)
-              .fontColor('#FF6B6B')
-
-            Text('高效时间管理')
-              .fontSize(16)
-              .fontColor('#666666')
-              .margin({ left: 8 })
-          }
-          .layoutWeight(1) // 占据剩余空间
-
-        }
+            .height(150)}
         .width('100%')
-        .padding({ bottom: 24 })
+        .padding({ bottom: 16 })
 
         // 任务列表区域
         Scroll() {
           Column() {
             ForEach(this.getSortedDateKeys(), (dateKey: string) => {
               TaskList({
+                taskListMap:this.taskListMap,
                 taskList: this.taskListMap[dateKey],
                 targetDate: dateKey
               })
+
             })
           }
         }
