@@ -8,10 +8,10 @@ import { AddTaskView } from './AddTaskView';
 @Component
 export struct TaskListView {
   @Prop taskListMap: TaskListMap = {
-    '2024-06-25': [
-      new TaskModel('task1', '写一篇发言稿', 90),
-      new TaskModel('task2', '项目会议准备', 45)
-    ],
+    // '2025-07-17': [
+    //   new TaskModel('task1', '写一篇发言稿', 90),
+    //   new TaskModel('task2', '项目会议准备', 45)
+    // ],
     '2024-06-23': [
       new TaskModel('task3', '设计提案文档', 120)
     ]

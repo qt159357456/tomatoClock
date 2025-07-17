@@ -59,8 +59,11 @@ export struct TaskList {
       dateKey:this.deleteDateKey,
       onCancel: () => {this.deleteDailogController.close()},
       onConfirm: (taskId:string,dateKey:string) => {
+        console.log('onConfirm called with:', taskId, dateKey);
         const result = TaskModel.deleteDialyTask(this.taskListMap,taskId,dateKey);
+        console.log('New taskListMap:', result);
         this.taskListMap = result;
+        this.taskList = result[this.targetDate] || [];
         this.deleteDailogController.close();
       }
     })
@@ -71,7 +74,7 @@ export struct TaskList {
   private formatDisplayDate(dateStr: string): string {
     const today = new Date();
     const todayStr = today.toISOString().split('T')[0];
-
+    if(this.taskList.length === 0) return ''
     if (dateStr === todayStr) return '今天';
 
     const yesterday = new Date(today);
@@ -93,6 +96,7 @@ export struct TaskList {
           .fontWeight(FontWeight.Bold)
           .fontColor('#333333')
           .layoutWeight(1)
+          .visibility(this.formatDisplayDate(this.targetDate) ? Visibility.Visible : Visibility.None)
       }
       .padding({ bottom: 16 })
 
@@ -114,7 +118,7 @@ export struct TaskList {
 
                 // 长按动作一结束触发
                 .onActionEnd(() => {
-                  if (this.count > 1) {
+                  if (this.count > 0) {
                     this.deleteID = task.id;
                     this.deleteDateKey = task.dateKey||'';
                     this.deleteDailogController.open()

@@ -50,7 +50,7 @@ export class TaskModel implements TaskData {
     this.completed = completed;
     this.remainingTime = remainingTime;
     this.completedTime = completedTime;
-    this.dateKey = dateKey;
+    this.dateKey = TaskModel.getTodayDateKey();
   }
 
   /**
@@ -130,12 +130,12 @@ export class TaskModel implements TaskData {
   ):TaskListMap {
     // 使用Array.from替代展开运算符
      const currentTasks = Array.from(taskMap[dateKey] || []);
-
-     currentTasks.filter(task => task.id === id)
-     taskMap[dateKey] = currentTasks;
-
-      return taskMap;
+     console.log('id is:', id);
+     const tmp = currentTasks.filter(task => task.id !== id)
+     taskMap[dateKey] = tmp;
+     return taskMap;
   }
+
 
   /** 获取当天日期键（YYYY-MM-DD 格式） */
   private static getTodayDateKey(): string {
