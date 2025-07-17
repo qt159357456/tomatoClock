@@ -52,12 +52,15 @@ import { TaskData } from '../model/TaskModel';
 //   }
 // }
 // components/TaskItem.ets
-import { TaskModel } from '../model/TaskModel';
+import { TaskModel,TaskListMap  } from '../model/TaskModel';
+
 
 @Component
 export struct TaskItem {
+  @Prop count:number = 0;
   @Prop task: TaskModel;
   @Prop isSelected: boolean = false;
+
 
   build() {
     Row() {
@@ -99,7 +102,9 @@ export struct TaskItem {
           // 启动番茄钟计时器
           console.log(`开始任务: ${this.task.title}`);
         })
+
     }
+
     .padding(16)
     .backgroundColor(Color.White)
     .borderRadius(12)

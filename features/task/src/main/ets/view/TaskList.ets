@@ -42,12 +42,29 @@ import { TaskItem } from './TaskItem';
 //     .shadow({ radius: 4, color: '#00000010', offsetX: 1, offsetY: 1 })
 //   }
 // }
-
+import { DeleteView } from '../view/DeleteTaskView';
+import { TaskListMap } from "../model/TaskModel";
 @Component
 export struct TaskList {
+  @Link taskListMap: TaskListMap;
   @Prop taskList: TaskModel[] = [];
   @Prop targetDate: string = '';
+  @State count:number = 0;
+  @State deleteID:string = '';
+  @State deleteDateKey:string = '';
 
+  deleteDailogController: CustomDialogController = new CustomDialogController({
+    builder:DeleteView({
+      taskId:this.deleteID,
+      dateKey:this.deleteDateKey,
+      onCancel: () => {this.deleteDailogController.close()},
+      onConfirm: (taskId:string,dateKey:string) => {
+        const result = TaskModel.deleteDialyTask(this.taskListMap,taskId,dateKey);
+        this.taskListMap = result;
+        this.deleteDailogController.close();
+      }
+    })
+  })
   /**
    * 格式化显示日期 (今天/昨天/其他)
    */
@@ -86,10 +103,30 @@ export struct TaskList {
             task: task,
             isSelected: false
           })
+            .gesture(
+              LongPressGesture({ repeat: true })
+              // 由于repeat设置为true，长按动作存在时会连续触发，触发间隔为duration（默认值500ms）
+                .onAction((event: GestureEvent) => {
+                  if (event.repeat) {
+                    this.count++
+                  }
+                })
+
+                // 长按动作一结束触发
+                .onActionEnd(() => {
+                  if (this.count > 1) {
+                    this.deleteID = task.id;
+                    this.deleteDateKey = task.dateKey;
+                    this.deleteDailogController.open()
+                  }
+                  // 重置 count
+                  this.count = 0
+                })
+            )
         })
       }
     }
     .width('100%')
-    .margin({ bottom: 24 })
+    .margin({ bottom: 20 })
   }
 }
