@@ -1,0 +1,1 @@
+export const TASK_LIST_MAP_KEY = 'TASK_LIST_MAP_KEY';

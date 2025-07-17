@@ -55,9 +55,10 @@ export struct WeekColumnView{
     new DayWeekMonth('3', '当月', 'Month','MonthDetail'),
   ]
   @Consume('PathStack') PathStack: NavPathStack;
+
   build() {
     Column() {
-      Text('时长分布')
+      Text('日程规划')
         .fontColor('#182431')
         .fontSize(16)
         .fontWeight(500)

@@ -1,9 +1,10 @@
+import {TaskData, TaskModel,TaskListMap} from 'task/src/main/ets/model/TaskModel'
 import {DataColumnView} from './addup'
 import {WeekColumnView} from  './weekmonth'
 import {DataDetailPage,DataClass} from './page/datadetailpage'
 import {WeekDetailPage,WeekClass} from './page/weekdetailpage'
 import {MonthDetailPage,MonthClass} from './page/monthdetailpage'
-interface ThemeColors {
+export interface ThemeColors {
   primary: string;
   secondary: string;
   background: string;
@@ -14,10 +15,19 @@ interface ThemeColors {
 @Preview
 @Component
 export struct DataCollection{
+  @Prop taskListMap: TaskListMap = {
+     '2025-07-17': [
+       new TaskModel('task1', '写一篇发言稿', 90),
+       new TaskModel('task2', '项目会议准备', 45)
+     ],
+    '2024-06-23': [
+      new TaskModel('task3', '设计提案文档', 120)
+    ]
+  };
   @State totalPomodoros: number = 0;
   @State todayPomodoros: number = 0;
   @State totalTime: number = 0;
-  @State todayTime: number = 0;
+  @State todayTime: number = 3;
   @State message: string = '统计数据';
   @Provide('PathStack') PathStack: NavPathStack = new NavPathStack();
 
@@ -56,6 +66,49 @@ export struct DataCollection{
         DataColumnView()
         WeekColumnView()
 
+        Text('今日成就')
+          .fontColor('#182431')
+          .fontSize(16)
+          .fontWeight(500)
+          .width('100%')
+          .fontFamily('HarmonyHeiTi-medium')
+          .textAlign(TextAlign.Start)
+          .padding({ left: 16, right: 16 })
+          .margin({ top:70,bottom: 8.5 })
+        Column(){
+          Text(this.todayTime >= 3 ? '当日累计专注3小时   🥉' : '当日累计专注3小时')
+            .fontColor('#182431')
+            .fontSize(16)
+            .fontWeight(500)
+            .width('100%')
+            .fontFamily('HarmonyHeiTi-medium')
+            .textAlign(TextAlign.Start)
+            .padding({ left: 4, right: 16 })
+            .margin({ top:9,bottom: 10 })
+          Text(this.todayTime >= 6 ? '当日累计专注6小时   🥈' : '当日累计专注6小时')
+            .fontColor('#182431')
+            .fontSize(16)
+            .fontWeight(500)
+            .width('100%')
+            .fontFamily('HarmonyHeiTi-medium')
+            .textAlign(TextAlign.Start)
+            .padding({ left: 4, right: 16 })
+            .margin({ top:9,bottom: 10 })
+          Text(this.todayTime >= 9 ? '当日累计专注9小时   🥈' : '当日累计专注9小时')
+            .fontColor('#182431')
+            .fontSize(16)
+            .fontWeight(500)
+            .width('100%')
+            .fontFamily('HarmonyHeiTi-medium')
+            .textAlign(TextAlign.Start)
+            .padding({ left: 4, right: 16 })
+            .margin({ top:9,bottom: 9 })
+          }
+          .width('90%')
+          .height(135)
+          .borderRadius(20)
+          .padding({ top: 8, left: 16, right: 16,bottom:8 })
+          .backgroundColor(Color.White)
       }
       .height('100%')
       .width('100%')

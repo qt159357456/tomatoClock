@@ -6,6 +6,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    'timer': "file:../timer"
+    'timer': "file:../timer",
+    'task': "file:../task",
   }
 }

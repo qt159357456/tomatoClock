@@ -49,8 +49,8 @@ export struct DataItem{
 @Component
 export struct DataColumnView {
   @State Datalist: Array<DataNumber> = [
-    new DataNumber('1', '次数', '0',),
-    new DataNumber('2', '时长(分钟)', '0',),
+    new DataNumber('1', '次数', '3',),
+    new DataNumber('2', '时长(分钟)', '200',),
   ]
   build() {
       Column() {

@@ -1,4 +1,6 @@
-//import { CJCalendar } from 'cjcalendar'
+import { monthCalendar } from './calendar'
+import {CJCalendar} from 'cjcalendar'
+import {TaskColumnView} from './sim_task'
 export class MonthClass{
 
 }
@@ -30,7 +32,7 @@ export struct MonthDetailPage {
       .onClick(() => {
         this.PathStack.pop()
       })
-      //CJCalendar()
+      monthCalendar()
     }
     .hideTitleBar(true)
   }
