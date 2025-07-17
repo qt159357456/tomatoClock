@@ -1,5 +1,3 @@
-
-@Preview
 @CustomDialog
 @Component
 export struct AddTaskView {
@@ -75,7 +73,7 @@ export struct AddTaskView {
           .height(45)
           .fontSize(16)
           .fontColor(Color.White)
-          .backgroundColor('#00ffcc')
+          .backgroundColor('#FF6B6B')
           .opacity(this.title.trim() ? 1 : 0.6) // 无内容时降低不透明度
           .enabled(!!this.title.trim()) // 无内容时禁用
           .onClick(() => {

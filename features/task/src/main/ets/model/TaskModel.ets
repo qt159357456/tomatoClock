@@ -14,6 +14,7 @@ export interface TaskData {
   completed: boolean;
   remainingTime: number;
   completedTime?: number;
+  dateKey?: string;
 }
 
 /**
@@ -27,7 +28,7 @@ export class TaskModel implements TaskData {
   completed: boolean;  // 是否完成
   remainingTime: number;  //剩余时间
   completedTime?: number; // 完成时间戳（仅当任务完成时存在）
-
+  dateKey?: string;
   /**
    * 构造函数
    * @param id 任务ID
@@ -41,13 +42,15 @@ export class TaskModel implements TaskData {
     title: string,
     remainingTime: number,
     completed: boolean = false,
-    completedTime?: number
+    completedTime?: number,
+    dateKey?: string,
   ) {
     this.id = id;
     this.title = title;
     this.completed = completed;
     this.remainingTime = remainingTime;
     this.completedTime = completedTime;
+    this.dateKey = dateKey;
   }
 
   /**
@@ -93,7 +96,6 @@ export class TaskModel implements TaskData {
 
       taskMap[dateKey] = currentTasks;
 
-      // 类型断言确保接口匹配[3,7](@ref)
       return taskMap;
     }
     return taskMap;
@@ -111,14 +113,28 @@ export class TaskModel implements TaskData {
     taskMap: TaskListMap,
     title: string,
     remainingTime: number,
-    targetDate?: string
+    targetDate?: string,
   ): [TaskListMap, TaskModel] {
     const dateKey = targetDate || TaskModel.getTodayDateKey();
     const newTask = TaskModel.createNew(title, remainingTime);
+    newTask.dateKey = dateKey;
     return [
       TaskModel.addTaskForDate(taskMap, dateKey, newTask),
       newTask
     ];
+  }
+  static deleteDialyTask(
+    taskMap: TaskListMap,
+    id:string,
+    dateKey:string,
+  ):TaskListMap {
+    // 使用Array.from替代展开运算符
+     const currentTasks = Array.from(taskMap[dateKey] || []);
+
+     currentTasks.filter(task => task.id === id)
+     taskMap[dateKey] = currentTasks;
+
+      return taskMap;
   }
 
   /** 获取当天日期键（YYYY-MM-DD 格式） */
