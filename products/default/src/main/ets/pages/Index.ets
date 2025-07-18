@@ -66,8 +66,8 @@ struct Index {
         }
         .width('100%')
         .height('100%')
-        .backgroundImage($r('app.media.bg_gradient'))
-        .backgroundImageSize(ImageSize.Cover)
+        // .backgroundImage($r('app.media.bg_gradient'))
+        // .backgroundImageSize(ImageSize.Cover)
       }
       .tabBar(this.tabBarBuilder('倒计时', 0, $r('app.media.ic_01_on'), $r('app.media.ic_01_off')))
 
@@ -81,8 +81,8 @@ struct Index {
         }
         .width('100%')
         .height('100%')
-        .backgroundImage($r('app.media.bg_gradient'))
-        .backgroundImageSize(ImageSize.Cover)
+        // .backgroundImage($r('app.media.bg_gradient'))
+        // .backgroundImageSize(ImageSize.Cover)
       }
       .tabBar(this.tabBarBuilder('任务管理', 1, $r('app.media.ic_02_on'), $r('app.media.ic_02_off')))
 
@@ -93,8 +93,8 @@ struct Index {
         }
         .width('100%')
         .height('100%')
-        .backgroundImage($r('app.media.bg_gradient'))
-        .backgroundImageSize(ImageSize.Cover)
+        // .backgroundImage($r('app.media.bg_gradient'))
+        // .backgroundImageSize(ImageSize.Cover)
       }
       .tabBar(this.tabBarBuilder('成就', 2, $r('app.media.ic_03_on'), $r('app.media.ic_03_off')))
 

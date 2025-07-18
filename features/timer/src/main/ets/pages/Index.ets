@@ -4,10 +4,10 @@ import { BusinessError } from '@kit.BasicServicesKit';
 @Entry
 @Component
 export struct TimerView {
-  @StorageLink('progress') progress: number = 0;
-  @StorageLink('currentTime') currentTime: number = this.inTime * 60;
-  @StorageLink('set') set: number = 0;
-  @StorageLink('taskName') taskName: string = "倒计时";
+  @State progress: number = 0;
+  @State currentTime: number = 25 * 60;
+  @State set: number = 0;
+  @State taskName: string = "倒计时";
   @Link taskListMap: TaskListMap;
   @Link @Watch('onSelectedTaskChanged') selectedTask: TaskModel | null;
 
@@ -61,8 +61,8 @@ export struct TimerView {
           updatedTask.remainingTime // 确保更新剩余时间
         );
         this.taskListMap[dateKey] = newList;
-        AppStorage.setOrCreate('progress', this.progress);
-        AppStorage.setOrCreate('currentTime', this.currentTime);
+        // AppStorage.setOrCreate('progress', this.progress);
+        // AppStorage.setOrCreate('currentTime', this.currentTime);
         console.log(`更新 taskListMap 中的任务: ${updatedTask.title}`);
       }
     }
@@ -84,7 +84,7 @@ export struct TimerView {
       this.taskName = "倒计时";
       console.log(`初始化默认计时器: ${this.currentTime}秒`);
     }
-    AppStorage.setOrCreate('taskName', this.taskName);
+    // AppStorage.setOrCreate('taskName', this.taskName);
     this.updateProgress();
     this.isRunning = false;
   }
@@ -119,7 +119,7 @@ export struct TimerView {
 
   updateset() {
     this.set = (this.set + 1) % 2;
-    AppStorage.setOrCreate('set', this.set);
+    // AppStorage.setOrCreate('set', this.set);
   }
 
   // 开始计时
