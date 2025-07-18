@@ -1,4 +1,4 @@
-import {TaskData, TaskModel,TaskListMap} from 'task/src/main/ets/model/TaskModel'
+import {TaskListView,TaskListMap,TaskModel} from 'task'
 import {DataColumnView} from './addup'
 import {WeekColumnView} from  './weekmonth'
 import {DataDetailPage,DataClass} from './page/datadetailpage'
@@ -15,15 +15,7 @@ export interface ThemeColors {
 @Preview
 @Component
 export struct DataCollection{
-  @Prop taskListMap: TaskListMap = {
-     '2025-07-17': [
-       new TaskModel('task1', '写一篇发言稿', 90),
-       new TaskModel('task2', '项目会议准备', 45)
-     ],
-    '2024-06-23': [
-      new TaskModel('task3', '设计提案文档', 120)
-    ]
-  };
+
   @State totalPomodoros: number = 0;
   @State todayPomodoros: number = 0;
   @State totalTime: number = 0;

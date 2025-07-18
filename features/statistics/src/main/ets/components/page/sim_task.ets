@@ -75,3 +75,36 @@ export struct TaskColumnView {
     .margin({ top: 18 })
   }
 }
+
+@Component
+export struct TaskColumnView1 {
+  @State TaskList: Array<TaskNumber> = [
+    new TaskNumber('1', '小组研讨','2.5小时'),
+    new TaskNumber('2', '制作APP','4小时'),
+    new TaskNumber('3', '写日记','1小时'),
+  ]
+  build() {
+    Column() {
+      Text('日程安排')
+        .fontColor('#182431')
+        .fontSize(20)
+        .fontWeight(500)
+        .fontFamily('HarmonyHeiTi-medium')
+        .textAlign(TextAlign.Start)
+        .padding({ left: 16, right: 16,bottom:8 })
+        .margin({ bottom: 8.5 })
+        .width('100%')
+      List({space: 4}) {
+        ForEach(this.TaskList, (item: TaskNumber) => {
+          ListItem() {
+            TaskItem({ TaskItem: item })
+          }
+        }, (item: TaskNumber) => item.id)
+      }
+      .scrollBar(BarState.Off)
+      .padding({ left: 16, right: 16 })
+    }
+    .padding(16)
+    .margin({ top: 18 })
+  }
+}

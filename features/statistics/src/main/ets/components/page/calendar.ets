@@ -1,6 +1,6 @@
 import { HmCalendar, HmCalendarController, HmCalendarType } from '@ohmos/calendar';
 import dayjs from 'dayjs';
-import {TaskColumnView} from './sim_task'
+import {TaskColumnView1} from './sim_task'
 @Component
 export struct weekCalendar {
   private calendarController: HmCalendarController = new HmCalendarController();
@@ -39,7 +39,7 @@ export struct weekCalendar {
       }
       HmCalendar({
         type: HmCalendarType.WEEK, // 设置为单周日历类型
-        color: '#ff0060aa', // 设置选中颜色为
+        color: '#ffaa0006', // 设置选中颜色为
         selectedDays: [
           { date: dayjs().format('YYYY-MM-DD'), text: ' ' } // 默认选中当前日期，设置选中文字为空
         ],
@@ -73,7 +73,7 @@ export struct monthCalendar {
           .margin({ bottom: 8.5 })
           .width('100%')
         HmCalendar({
-          color: '#ff0060aa', // 设置选中颜色为绿色
+          color: '#ffaa0006', // 设置选中颜色为绿色
           selectedDays: [
             { date: dayjs().format('YYYY-MM-DD'), text: ' ' }// 默认选中当前日期，设置选中文字为空
           ],
@@ -81,7 +81,7 @@ export struct monthCalendar {
           .borderRadius(8) // 设置边框圆角为8
           .border({ width: 0.5, color: '#ededed' }) // 设置边框宽度为0.5，颜色为#ededed
           .shadow({ color: '#ededed', radius: 16 }) // 设置阴影颜色为#ededed，半径为16
-        TaskColumnView()
+        TaskColumnView1()
       }
       .width('100%')
       .padding(16)
