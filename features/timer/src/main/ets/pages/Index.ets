@@ -1,9 +1,16 @@
 import { TaskListMap, TaskModel } from 'task';
 import { BusinessError } from '@kit.BasicServicesKit';
+import { formBindingData, formProvider } from '@kit.FormKit';
+
+interface CardMesa{
+  'title':string,
+  'currentTime':number
+}
 
 @Entry
 @Component
 export struct TimerView {
+  @StorageLink('formId') formId: string = '';
   @State progress: number = 0;
   @State currentTime: number = 25 * 60;
   @State set: number = 0;
@@ -66,6 +73,14 @@ export struct TimerView {
         console.log(`更新 taskListMap 中的任务: ${updatedTask.title}`);
       }
     }
+
+    const info:CardMesa = {
+      'title':updatedTask.title,
+      'currentTime':updatedTask.remainingTime
+    }
+    const formInfo: formBindingData.FormBindingData = formBindingData.createFormBindingData(info);
+    formProvider.updateForm('634978358', formInfo)
+    // formProvider.updateForm(this.formId, formInfo);
   }
 
   // 初始化计时器

@@ -15,6 +15,9 @@ export default class DefaultFormAbility extends FormExtensionAbility {
       title: "专注任务",
       currentTime: 1500 // 25分钟 = 1500秒
     };
+    const formId = want.parameters![formInfo.FormParam.IDENTITY_KEY] as string;
+    console.log('formId is',formId);
+    AppStorage.setOrCreate('formId', formId);
     return formBindingData.createFormBindingData(formData);
   }
 
