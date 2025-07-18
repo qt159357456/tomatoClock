@@ -18,11 +18,12 @@ export struct DeleteView{
         .margin({top:15, bottom : 25})
       Row() {
         Button('取消', { type: ButtonType.Normal })
-          .layoutWeight(1)
+          .layoutWeight(0.6)
           .height(45)
           .fontSize(16)
           .fontColor('#606266')
           .backgroundColor('#f0f0f0')
+          .margin({left:15, bottom:5})
           .borderRadius(8)
           .onClick(() => this.onCancel?.())
 
@@ -32,19 +33,20 @@ export struct DeleteView{
 
         // 确认按钮
         Button('确认', { type: ButtonType.Capsule })
-          .layoutWeight(1) // 等分空间
+          .layoutWeight(0.6) // 等分空间
           .height(45)
           .fontSize(16)
           .fontColor(Color.White)
           .backgroundColor('#FF6B6B')
+          .margin({right:15, bottom:5})
           .onClick(() => {
                  this.onConfirm(this.taskId,this.dateKey)
           })
       }
-      .margin({left:6, right:6,bottom:5})
+
       .width('100%')
       .justifyContent(FlexAlign.SpaceBetween)
     }
-       .borderRadius(15)
+       .borderRadius(10)
     }
   }

@@ -2,8 +2,6 @@ import { TaskModel, TaskListMap } from "../model/TaskModel";
 import { TaskList } from './TaskList';
 import { AddTaskView } from './AddTaskView';
 
-
-
 @Preview
 @Component
 export struct TaskListView {
@@ -21,10 +19,6 @@ export struct TaskListView {
     }),
     alignment: DialogAlignment.Center,
   })
-
-  /**
-   * 按日期排序任务列表 (倒序)
-   */
   private getSortedDateKeys(): string[] {
     return Object.keys(this.taskListMap)
       .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
@@ -36,9 +30,8 @@ export struct TaskListView {
         Row() {
           Image($r('app.media.tomato_icon'))
             .width('100%')
-            .height(150)}
+        }
         .width('100%')
-        .padding({ bottom: 16 })
 
         // 任务列表区域
         Scroll() {
@@ -56,6 +49,7 @@ export struct TaskListView {
         }
         .layoutWeight(1)
         .scrollable(ScrollDirection.Vertical)
+        .margin({left: 12,right: 12})
 
         // 加号SVG按钮
         Image($r('app.media.jiahao'))
@@ -72,7 +66,6 @@ export struct TaskListView {
           .textAlign(TextAlign.Center)
           .margin({ top: 20 })
       }
-      .padding(24)
       .width('100%')
       .height('100%')
     }
