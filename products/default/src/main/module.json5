@@ -47,6 +47,19 @@
             "resource": "$profile:backup_config"
           }
         ]
+      },
+      {
+        "name": "DefaultFormAbility",
+        "srcEntry": "./ets/defaultformability/DefaultFormAbility.ets",
+        "label": "$string:DefaultFormAbility_label",
+        "description": "$string:DefaultFormAbility_desc",
+        "type": "form",
+        "metadata": [
+          {
+            "name": "ohos.extension.form",
+            "resource": "$profile:form_config"
+          }
+        ]
       }
     ],
     "requestPermissions": [
