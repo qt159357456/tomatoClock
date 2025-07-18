@@ -112,7 +112,7 @@ export struct DataCollection{
       }
       .height('100%')
       .width('100%')
-      .backgroundColor('#F1F3F5')
+      // .backgroundColor('#F1F3F5')
     }
     .navDestination(this.quickStartRouter)
     .hideTitleBar(true)

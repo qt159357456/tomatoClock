@@ -53,32 +53,50 @@ struct Index {
       this.tabsController.changeIndex(targetIndex);
     })
   }
+
   build() {
-    Tabs({ barPosition: BarPosition.End,controller: this.tabsController }){
+    Tabs({ barPosition: BarPosition.End, controller: this.tabsController }) {
+      // 1. 倒计时页 - 深蓝色渐变背景
       TabContent() {
-        TimerView({
-          taskListMap: this.taskListMap,
-          selectedTask: this.selectedTask
-        })
+        Stack() {
+          TimerView({
+            taskListMap: this.taskListMap,
+            selectedTask: this.selectedTask
+          })
+        }
+        .width('100%')
+        .height('100%')
+        .backgroundImage($r('app.media.bg_gradient'))
+        .backgroundImageSize(ImageSize.Cover)
       }
       .tabBar(this.tabBarBuilder('倒计时', 0, $r('app.media.ic_01_on'), $r('app.media.ic_01_off')))
 
+      // 2. 任务管理页 - 浅灰色背景
       TabContent() {
-        TaskListView({
-          taskListMap: this.taskListMap,
-          onSwitchToTimer: this.switchToTimer.bind(this) // 传递切换方法
-        })
+        Stack() {
+          TaskListView({
+            taskListMap: this.taskListMap,
+            onSwitchToTimer: this.switchToTimer.bind(this)
+          })
+        }
+        .width('100%')
+        .height('100%')
+        .backgroundImage($r('app.media.bg_gradient'))
+        .backgroundImageSize(ImageSize.Cover)
       }
-      .tabBar(this.tabBarBuilder('任务管理', 1, $r('app.media.ic_01_on'), $r('app.media.ic_01_off')))
+      .tabBar(this.tabBarBuilder('任务管理', 1, $r('app.media.ic_02_on'), $r('app.media.ic_02_off')))
 
+      // 3. 成就页 - 浅灰色背景
       TabContent() {
-        DataCollection()
+        Stack() {
+          DataCollection()
+        }
+        .width('100%')
+        .height('100%')
+        .backgroundImage($r('app.media.bg_gradient'))
+        .backgroundImageSize(ImageSize.Cover)
       }
-      .tabBar(this.tabBarBuilder('成就', 2, $r('app.media.ic_01_on'), $r('app.media.ic_01_off')))
-      TabContent() {
-
-      }
-      .tabBar(this.tabBarBuilder('我的', 3, $r('app.media.ic_01_on'), $r('app.media.ic_01_off')))
+      .tabBar(this.tabBarBuilder('成就', 2, $r('app.media.ic_03_on'), $r('app.media.ic_03_off')))
 
     }
     .scrollable(false)
@@ -87,7 +105,6 @@ struct Index {
       strokeWidth: 0.5,
       color: '#0D182431'
     })
-    .backgroundColor('#F1F3F5')
     .padding({ top: 36, bottom: 28 })
   }
 }
